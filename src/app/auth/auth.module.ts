@@ -1,0 +1,57 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// Services
+import { AuthService } from './auth.service';
+import { NotifyService } from './shared/notifications/notify.service';
+
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+// import { NotificationMessageComponent } from './shared/notifications/notification-message/notification-message.component';
+// import { LoginFormComponent } from './forms/login/login-form.component';
+// import { RegisterFormComponent } from './forms/register/register-form.component';
+// import { AdminComponent } from './admin/admin.component';
+
+import { AuthRoutingModule } from './auth.routes';
+
+@NgModule({
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    //BrowserAnimationsModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AuthRoutingModule,
+    IonicModule,
+    CommonModule
+  ],
+  providers: [AuthService, NotifyService],
+  declarations: [
+  	RegisterComponent,
+  	LoginComponent,
+    ProfileComponent,
+    // NotificationMessageComponent,
+    // LoginFormComponent,
+    // RegisterFormComponent,
+    // AdminComponent,
+  ],
+  exports: [
+  	RegisterComponent,
+  	LoginComponent,
+    ProfileComponent,
+    // NotificationMessageComponent,
+    // LoginFormComponent,
+    // RegisterFormComponent,
+    // AdminComponent,
+  ]
+})
+export class AuthModule { }

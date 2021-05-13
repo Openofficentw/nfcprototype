@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="auth.user | async; then authenticated else guest">
+  </div>
+</ion-content>
+
+<ng-template #guest>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Hello</ion-card-title>
+      <ion-card-subtitle>Your Email will go here</ion-card-subtitle>
+    </ion-card-header> 
+  </ion-card>
+</ng-template>
+
+<ng-template #authenticated>
+  <div *ngIf="auth.user | async as user">
+    <form (ngSubmit)="update(user)">
+  
+  <ion-card >
+    <ion-card-header>
+      <ion-card-title>{{ user.displayName }}</ion-card-title>
+      <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+    </ion-card-header> 
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-content>
+      <ion-text color="tertiary">
+        <h1>Your Information</h1>
+      </ion-text>
+      <ion-label position="fixed">Name</ion-label>
+      <ion-input [(ngModel)]="user.displayName" name="user.displayName"></ion-input>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card >
+    <ion-card-content>
+      <ion-text color="tertiary">
+        <h1>Employer / Agency Information</h1>
+      </ion-text>
+      <ion-label position="fixed">Agency's Name</ion-label>
+      <ion-input [(ngModel)]="user.agency.name" name="user.agency.name"></ion-input>
+
+      <ion-label position="fixed">Agency's Phone Number</ion-label>
+      <ion-input [(ngModel)]="user.agency.phoneNumber" name="user.agency.phoneNumber"></ion-input>
+
+      <ion-label position="fixed">Your Agency Contact Name</ion-label>
+      <ion-input [(ngModel)]="user.agency.contactName" name="user.agency.contactName"></ion-input>
+
+      <ion-label position="fixed">Your Agency Contact Email </ion-label>
+      <ion-input [(ngModel)]="user.agency.contactEmail" name="user.agency.contactEmail"></ion-input>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-button expand="block" type="submit">Update Profile</ion-button>
+    </ion-card-content>
+  </ion-card>
+  </form>
+</div>
+</ng-template>
