@@ -1,76 +1,271 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+<div class="section">
   <div *ngIf="auth.user | async; then authenticated else guest">
+          <!-- template will replace this div -->
   </div>
-</ion-content>
+</div>
 
-<ng-template #guest>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Hello</ion-card-title>
-      <ion-card-subtitle>Your Email will go here</ion-card-subtitle>
-    </ion-card-header> 
-  </ion-card>
+<!-- User NOT logged in -->
+<ng-template #guest class="box">
+  <h3>Howdy, GUEST</h3>
+  <p class="card-text">Login to get started...</p>
+  <button class="button" routerLink="/login">Login</button>
 </ng-template>
 
+<!-- User logged in -->
 <ng-template #authenticated>
-  <div *ngIf="auth.user | async as user">
-    <form (ngSubmit)="update(user)">
-  
-  <ion-card >
-    <ion-card-header>
-      <ion-card-title>{{ user.displayName }}</ion-card-title>
-      <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
-    </ion-card-header> 
-  </ion-card>
-  
-  <ion-card>
-    <ion-card-content>
-      <ion-text color="tertiary">
-        <h1>Your Information</h1>
-      </ion-text>
-      <ion-label position="fixed">Name</ion-label>
-      <ion-input [(ngModel)]="user.displayName" name="user.displayName"></ion-input>
-    </ion-card-content>
-  </ion-card>
+  <div class="card" *ngIf="auth.user | async as user">
+    <header class="card-header">
+    <p class="card-header-title">
+      My Profile
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img class="card-img-top" [src]="user.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">{{ user.displayName }}</p>
+        <p class="subtitle is-6">{{ user.email }}</p>
+      </div>
+    </div>
+    
+    <div class="content">
+      <h2>Your Information</h2>
 
-  <ion-card >
-    <ion-card-content>
-      <ion-text color="tertiary">
-        <h1>Employer / Agency Information</h1>
-      </ion-text>
-      <ion-label position="fixed">Agency's Name</ion-label>
-      <ion-input [(ngModel)]="user.agency.name" name="user.agency.name"></ion-input>
+      <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+          <input class="input is-medium" type="text" placeholder="Display Name" [(ngModel)]="user.displayName">
+        </div>
+      </div>
 
-      <ion-label position="fixed">Agency's Phone Number</ion-label>
-      <ion-input [(ngModel)]="user.agency.phoneNumber" name="user.agency.phoneNumber"></ion-input>
+      <hr> 
 
-      <ion-label position="fixed">Your Agency Contact Name</ion-label>
-      <ion-input [(ngModel)]="user.agency.contactName" name="user.agency.contactName"></ion-input>
+      <h2 class="title">Employer / Agency Information</h2>
+      <p>This information will be used to send invoices to your employer</p>
 
-      <ion-label position="fixed">Your Agency Contact Email </ion-label>
-      <ion-input [(ngModel)]="user.agency.contactEmail" name="user.agency.contactEmail"></ion-input>
-    </ion-card-content>
-  </ion-card>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Agency's Name</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Agency Name" [(ngModel)]="user.agency.name">
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Agency's Phone Number</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Agency Phone Number" [(ngModel)]="user.agency.phoneNumber">
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-button expand="block" type="submit">Update Profile</ion-button>
-    </ion-card-content>
-  </ion-card>
-  </form>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Your Agency Contact Name</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Your Agency Contact Name" [(ngModel)]="user.agency.contactName">
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Your Agency Contact Email</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Your Agency Contact Name" [(ngModel)]="user.agency.contactEmail">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <h5 class="title is-5">Address</h5>
+
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Address Line 1</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 1" [(ngModel)]="user.agency.address.addressLine1">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Address Line 2</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 2" [(ngModel)]="user.agency.address.addressLine2">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">City</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 2" [(ngModel)]="user.agency.address.city">
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">State</label>
+            <div class="control">
+              <div class="select is-medium">
+                <select [(ngModel)]="user.agency.address.state">
+                  <option *ngFor="let state of states" [value]="state.name">{{state.abbreviation}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Zipcode</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 2" [(ngModel)]="user.agency.address.zipcode">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <hr>
+
+      <h2>Business Information</h2>
+      <p>This information will be used for your invoicing information and for tax purposes</p>
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Business Name</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="please enter your business name" [(ngModel)]="user.company.name">
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Phone Number</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="please enter your business name" [(ngModel)]="user.company.phoneNumber">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+      <h5 class="title is-5">Address</h5>
+
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Address Line 1</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 1" [(ngModel)]="user.company.address.addressLine1">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Address Line 2</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 2" [(ngModel)]="user.company.address.addressLine2">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">City</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 2" [(ngModel)]="user.company.address.city">
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">State</label>
+            <div class="control">
+              <div class="select is-medium">
+                <select [(ngModel)]="user.company.address.state">
+                  <option *ngFor="let state of states" [value]="state.name">{{state.abbreviation}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Zipcode</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="Address Line 2" [(ngModel)]="user.company.address.zipcode">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Tax Id Type</label>
+            <div class="control">
+              <div class="select is-medium">
+                <select [(ngModel)]="user.company.taxIdType">
+                  <option [value]="ssn">Social Security Number</option>
+                  <option [value]="ein">Employer Identification</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="field">
+            <label class="label">Tax ID</label>
+            <div class="control">
+              <input class="input is-medium" type="text" placeholder="please enter your business name" [(ngModel)]="user.company.taxId">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+
+      <div class="field">
+        <button (click)="update(user)" class="button is-info">Update Profile</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 </ng-template>

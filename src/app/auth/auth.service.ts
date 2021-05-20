@@ -10,8 +10,7 @@ import { NotifyService } from './shared/notifications/notify.service';
 import { Observable, of } from 'rxjs';
 import { switchMap, startWith, tap, filter } from 'rxjs/operators';
 
-import { User } from './shared/models/user.model'
-
+//import { User } from '../shared/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -39,53 +38,53 @@ export class AuthService {
 
   ////// OAuth Methods /////
 
-  // googleLogin() {
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   return this.oAuthLogin(provider);
-  // }
+  googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-  // githubLogin() {
-  //   const provider = new firebase.auth.GithubAuthProvider();
-  //   return this.oAuthLogin(provider);
-  // }
+  githubLogin() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-  // facebookLogin() {
-  //   const provider = new firebase.auth.FacebookAuthProvider();
-  //   return this.oAuthLogin(provider);
-  // }
+  facebookLogin() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-  // twitterLogin() {
-  //   const provider = new firebase.auth.TwitterAuthProvider();
-  //   return this.oAuthLogin(provider);
-  // }
+  twitterLogin() {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-  // private oAuthLogin(provider: firebase.auth.AuthProvider) {
-  //   return this.afAuth.auth.signInWithPopup(provider)
-  //     .then((credential) => {
-  //       this.notify.update('Welcome to Firestarter!!!', 'success');
-  //       return this.updateUserData(credential.user);
-  //     })
-  //     .catch((error) => this.handleError(error) );
-  // }
+  private oAuthLogin(provider: firebase.auth.AuthProvider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((credential) => {
+        this.notify.update('Welcome to Firestarter!!!', 'success');
+        return this.updateUserData(credential.user);
+      })
+      .catch((error) => this.handleError(error) );
+  }
 
 
 //// Anonymous Auth ////
-  // anonymousLogin() {
-  //   return this.afAuth.auth
-  //     .signInAnonymously()
-  //     .then(credential => {
-  //       this.notify.update('Welcome to Firestarter!!!', 'success');
-  //       return this.updateUserData(credential.user); // if using firestore
-  //     })
-  //     .catch(error => {
-  //       this.handleError(error);
-  //     });
-  // }
+  anonymousLogin() {
+    return this.afAuth.auth
+      .signInAnonymously()
+      .then(credential => {
+        this.notify.update('Welcome to Firestarter!!!', 'success');
+        return this.updateUserData(credential.user); // if using firestore
+      })
+      .catch(error => {
+        this.handleError(error);
+      });
+  }
 
   //// Email/Password Auth ////
 
   emailSignUp(email: string, password: string) {
-    return this.afAuth
+    return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(credential => {
         this.notify.update('Welcome new user!', 'success');
@@ -95,7 +94,7 @@ export class AuthService {
   }
 
   managerEmailSignUp(u:any) {
-    return this.afAuth
+    return this.afAuth.auth
     .createUserWithEmailAndPassword(u.email, u.password)
     .then(credential => {
        this.notify.update('Thanks for registering with epoch!', 'success');
@@ -105,7 +104,7 @@ export class AuthService {
   }
 
   emailLogin(email: string, password: string) {
-    return this.afAuth
+    return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
         //this.notify.update('Welcome back!', 'success');
@@ -117,16 +116,16 @@ export class AuthService {
 
   // Sends email allowing user to reset password
   resetPassword(email: string) {
-    //const fbAuth = auth();
+    const fbAuth = auth();
 
-    return this.afAuth
+    return fbAuth
       .sendPasswordResetEmail(email)
       .then(() => this.notify.update('Password update email sent', 'info'))
       .catch(error => this.handleError(error));
   }
 
   signOut() {
-    this.afAuth.signOut().then(() => {
+    this.afAuth.auth.signOut().then(() => {
       this.router.navigate(['/']);
     });
   }
@@ -139,7 +138,6 @@ export class AuthService {
 
   // Sets user data to firestore after succesful login
   updateUserData(user: any) {
-    console.log(user)
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     return userRef.set(user);
   }
