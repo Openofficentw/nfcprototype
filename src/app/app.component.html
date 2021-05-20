@@ -65,7 +65,35 @@
 <section class="section">
   <div class="container">
     <div class="column is-3">
-      <div class="card">
+      <div class="tabs is-centered is-boxed">
+        <ul>
+          <li [class.is-active]="activeTab === 'default'" (click)='activeTab = "default"'>
+            <a>
+              <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+              <span>Default</span>
+            </a>
+          </li>
+          <li [class.is-active]="activeTab === 'tiles'" (click)='activeTab = "tiles"'>
+            <a>
+              <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+              <span>Tiles</span>
+            </a>
+          </li>
+          <!-- <li>
+            <a>
+              <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+              <span>Videos</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
+              <span>Documents</span>
+            </a>
+          </li> -->
+        </ul>
+      </div>
+      <div class="card" *ngIf="activeTab === 'default'">
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="assets/IMG_NEX2.png" alt="Placeholder image">
@@ -112,6 +140,61 @@
             
           </div>
         </div>
+      </div>
+      <div class="card" *ngIf="activeTab === 'tiles'">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="assets/IMG_NEX2.png" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <img class="is-rounded" src="assets/IMG_0252.jpg" alt="Placeholder image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">Kingsley Ogbonna</p>
+              <p class="subtitle is-6">openofficentw@gmail.com</p>
+            </div>
+          </div>
+      
+          <div class="content">
+            <div class="tile is-ancestor">
+              <div class="tile is-vertical is-12">
+                <div class="tile">
+                  <div class="tile is-parent is-vertical">
+                    <article class="tile is-child notification is-primary">
+                      Website
+                    </article>
+                    <article class="tile is-child notification is-info">
+                      Linked In
+                    </article>
+                  </div>
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-danger">
+                      Instagran
+                    </article>
+                  </div>
+                </div>
+                <div class="tile is-parent">
+                  <article class="tile is-child box">
+                    Twitter
+                  </article>
+                </div>
+              </div>
+              <!-- <div class="tile is-parent">
+                <article class="tile is-child box">
+                  hi
+                </article>
+              </div> -->
+            </div>
+            
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
